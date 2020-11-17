@@ -1,0 +1,92 @@
+import React, {Component} from 'react';
+import './products.styles.css';
+import Fade from 'react-reveal/Fade';
+import ReactModal from 'react-modal';
+import Zoom from 'react-reveal/Zoom';
+
+class Products extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            product: null
+        };
+    }
+
+    //method to change state value with the clicked product values and open the modal
+    openModal = (product) => {
+        this.setState({ product });
+    }
+
+    //method to close the modal
+    closeModal = () => {
+        this.setState({ product: null });
+    }
+
+    render() {
+        const { product } = this.state;
+        return(
+            <div>
+                <Fade bottom cascade={true}>
+                    <ul className="products">
+                        {this.props.products.map(product => (
+                            <li key={product.id}>
+                                <div className="product">
+                                    <a href={"#" + product.id} onClick={() => this.openModal(product)}>
+                                        <img src={product.image} alt={product.title}></img>
+                                        <p>
+                                            {product.title}
+                                        </p>
+                                    </a>
+                                    <div className="product-price">
+                                        <div>
+                                            ${product.price}
+                                        </div>
+                                        <button onClick={ () => this.props.addToCart(product)} className="button primary">Add To Cart</button>
+                                    </div>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </Fade>
+                {/* below code will run when someone click on any product image..so, if there is any product then */}
+                {
+                    product && (
+                        <ReactModal isOpen={true} onRequestClose={this.closeModal}>
+                            <Zoom>
+                                <button onClick={this.closeModal} className="close-modal">x</button>
+                                <div className="product-details">
+                                    <img src={product.image} alt={product.title}></img>
+                                    <div className="product-details-description">
+                                        <p>
+                                            <strong> {product.title} </strong>  
+                                        </p>
+                                        <p>
+                                            {product.description}
+                                        </p>
+                                        <div className="product-price">
+                                            <div>
+                                                Price: {""}${product.price}
+                                            </div>
+                                            <button 
+                                                className="button primary" 
+                                                onClick={() => {
+                                                    this.props.addToCart(product);
+                                                    this.closeModal();
+                                                }}
+                                            >
+                                                Add To Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Zoom>
+                        </ReactModal>
+                    )
+                }
+            </div>
+        )
+    }
+}
+
+export default Products;
+
