@@ -15,7 +15,7 @@ class App extends Component {
     }
   }
 
-  //adding items to cart
+  //adding items to cart  //coder: jit
   addToCart = (product) => {
     const cartItems = this.state.cartItems.slice();
     let alreadyInCart = false;
@@ -33,7 +33,7 @@ class App extends Component {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }
 
-  //remove items from cart
+  //remove items from cart //coder: jit
   removeFromCart = (product) => {
     const cartItems = this.state.cartItems.slice();
     this.setState({cartItems: cartItems.filter(x => x.id !== product.id)});
@@ -41,9 +41,8 @@ class App extends Component {
     localStorage.setItem("cartItems", JSON.stringify(cartItems.filter(x => x.id !== product.id))); 
   }
 
-  //filter items against category
+  //filter items against category //coder: jit
   filterCategory = (event) => {
-    console.log(event.target.value);
     if(event.target.value === "") {
       this.setState({
         category: event.target.value,
@@ -57,7 +56,7 @@ class App extends Component {
     }
   }
 
-  //method for saving the order
+  //method for saving the order //coder: jit
   saveOrder = (order) => {
     alert("need to save order for " + order.name);
   }
